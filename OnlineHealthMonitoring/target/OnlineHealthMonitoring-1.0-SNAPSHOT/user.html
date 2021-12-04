@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .row-edit{
+                margin: 5px;
+                border-radius: 30px;
+                border: 3px solid #333;
+                padding: 5px 10px 5px 10px;
+                background-color: #fff;
+            }
+            .row-edit div:first-child{
+                border-right: 3px solid #ccc;
+            }
+            .row-edit i{                    
+                color: #333;
+                margin: 0 7px 0 7px;
+            }
+            .container-edit{
+                margin-left: 25%;
+                margin-right: 25%;
+                margin-top: 30px;
+                border: 3px solid #ccc;
+                border-radius: 20px;
+                padding: 20px 30px 20px 30px;
+                background-color: #0cb9f6;
+            }
+            .line{
+                margin-bottom: 20px;
+            }
+            .text-center img{
+                width: 70px
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <!-- deisign something to show the user information -->
+            <div class="user-content"></div>
+            <a href="homepage.html"></a>
+        </main>
+
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var user;
+            $.get(
+                    "http://localhost:8080/OnlineHealthMonitoring/UserManage",
+                    {Type: "UserTranfer"},
+                    function (data) {
+                        user = data;
+                        showUser(user);
+                    }, "Json"
+                    );
+            function showUser(userInfor) {
+                let _str = '';
+                _str += `
+                                    <div class="container-edit">
+                                        <div class="container">
+                                            <div class="line"><h3>User Information</h3></div>
+                                            <div class="row row-edit">
+                                                    <div class="col-md-6">Full name:</div>
+                                                    <div class="col-md-6">${userInfor.fullName}</div>
+                                            </div>
+                                            <div class="row row-edit">
+                                                    <div class="col-md-6">Gender:</div>
+                                                    <div class="col-md-6">${userInfor.gender}</div>
+                                            </div>
+                                            <div class="row row-edit">
+                                                    <div class="col-md-6">Age:</div>
+                                                    <div class="col-md-6">${userInfor.age}</div>
+                                            </div>
+                                            <div class="row row-edit">
+                                                    <div class="col-md-6">Address:</div>
+                                                    <div class="col-md-6">${userInfor.address}</div>
+                                            </div>
+                                            <div class="row row-edit">
+                                                    <div class="col-md-6">Phone number:</div>
+                                                    <div class="col-md-6">${userInfor.phoneNumber}</div>
+                                            </div>
+                                            <div class="row row-edit">
+                                                    <div class="col-md-6">Email</div>
+                                                    <div class="col-md-6">${userInfor.email}</div>
+                                            </div>
+                                        </div>
+                                        <div><a href="homepage.html">return</a></div>
+                                    </div>`;
+                $('.user-content').html('');
+                $('.user-content').append(_str);
+            }
+            ;
+        });
+    </script>
+</html>

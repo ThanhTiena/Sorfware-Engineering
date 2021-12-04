@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Payment</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+        <style>
+            .title {
+                font-weight: bold;
+                font-size: 50px;
+                color: skyblue;
+            }
+            #table {
+                width: 70%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #wrap1 {
+                width: 100%;
+                height: 200px;
+            }
+            #logo img {
+                margin-left: 160px;
+                max-width: 150px;
+            }
+            #htmlContent{
+                /*display:none;*/
+            }
+        </style>
+        <script>
+            $(document).ready(function () {
+                doAdd();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="htmlContent">
+
+        </div>
+        <div id="editor"></div>
+    <center>
+        <button class="generatePDF" onclick="generateBill()">Save Bill</button>
+    </center>
+</body>
+<script>
+//        Save pdf bill
+    function generateBill() {
+        var doc = new jsPDF('p', 'pt', 'a4', true);
+        doc.fromHTML($('#htmlContent').get(0), 15, 15, {
+            'width': 500
+        },
+                function () {
+                    doc.save('payment.pdf');
+                });
+    };
+    function doAdd() {
+//            create the template for PDF
+        let pdfTemplate = `<div class="container" id="wrap1">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="title">Payment</div>
+                        <div class="patient-info">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div>Patient Name:</div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="pname"> Nguyen hoang huy</div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div>Patient Address:</div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="paddress">123 street</div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div>Patient Phone:</div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="pphone">0839294444</div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div>Date:</div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="payment-date">17/2/2020</div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class="col-4" id="logo">
+                        <img src="images/logo.png" alt="logo" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrap">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table" id="table">
+                            <thead>
+                                <tr style="background: skyblue;">
+                                    <th style="width: 100px; text-align: center;">QTY</th>
+                                    <th style="text-align: center" ;>Description</th>
+                                    <th style="text-align: center" ;>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-top: 2px solid black;">
+                                    <td style="width: 100px; text-align: center;">1</td>
+                                    <td style="width: 600px;">Doe</td>
+                                    <td style="width: 100px; text-align: center;" >$13</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px; text-align: center;">2</td>
+                                    <td style="width: 600px;">Moe</td>
+                                    <td style="width: 100px; text-align: center;" text-align: center;>$11</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px; text-align: center;">3</td>
+                                    <td style="width: 600px;">Dooddo</td>
+                                    <td style="width: 100px; text-align: center;" >$551</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px; text-align: center;">4</td>
+                                    <td style="width: 600px;">Dooley</td>
+                                    <td style="width: 100px; text-align: center;" >$551</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: right; font-weight: bold; font-size: 24px;">Total</td>
+                                    <td style="text-align: center; font-weight: bold;font-size: 24px">$312</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> `;
+
+        $('#htmlContent').html('');
+        $('#htmlContent').append(pdfTemplate);
+    }
+    ;
+</script>
+</html>
